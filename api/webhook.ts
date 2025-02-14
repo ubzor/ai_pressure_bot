@@ -3,6 +3,7 @@ import { bot } from "./bot";
 
 export default async (req: VercelRequest, res: VercelResponse) => {
     try {
+        await bot.init();
         await bot.handleUpdate(req.body);
         res.status(200).send("OK");
     } catch (error) {

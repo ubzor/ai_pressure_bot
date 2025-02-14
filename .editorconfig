@@ -3,6 +3,5 @@ root = true
 [*]
 indent_style = space
 indent_size = 4
-
-# Custom property: disable trailing commas (not part of the standard)
-insert_trailing_commas = false
+end_of_line = lf
+insert_final_newline = true
