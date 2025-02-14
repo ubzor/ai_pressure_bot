@@ -1,15 +1,15 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { Bot, Keyboard } from "grammy";
+import { Bot, Keyboard, webhookCallback } from "grammy";
 
-import { prisma } from "./prisma";
+import prisma from "./prisma";
 import type { Entry } from "@prisma/client"; // Added type import
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN must be provided in env variables");
 
-export const bot = new Bot(token);
+const bot = new Bot(token);
 
 const menu = new Keyboard()
     .text("новая запись")
@@ -48,7 +48,9 @@ bot.on("message:text", async (ctx) => {
         }
         const stats = entries
             .map(
-                (entry: Entry) => // Added type annotation for entry
+                (
+                    entry: Entry // Added type annotation for entry
+                ) =>
                     `${new Date(entry.createdAt).toLocaleString()}: ${
                         entry.systolic
                     }/${entry.diastolic} мм.рт.ст, пульс: ${entry.pulse}`
@@ -93,3 +95,5 @@ bot.on("message:text", async (ctx) => {
 if (process.env.NODE_ENV !== "production") {
     bot.start();
 }
+
+export default webhookCallback(bot, "https");
