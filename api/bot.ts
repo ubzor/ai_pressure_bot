@@ -4,6 +4,7 @@ dotenv.config();
 import { Bot, Keyboard } from "grammy";
 
 import { prisma } from "./prisma";
+import type { Entry } from "@prisma/client"; // Added type import
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN must be provided in env variables");
@@ -47,7 +48,7 @@ bot.on("message:text", async (ctx) => {
         }
         const stats = entries
             .map(
-                (entry) =>
+                (entry: Entry) => // Added type annotation for entry
                     `${new Date(entry.createdAt).toLocaleString()}: ${
                         entry.systolic
                     }/${entry.diastolic} мм.рт.ст, пульс: ${entry.pulse}`
