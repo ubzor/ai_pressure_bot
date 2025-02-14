@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Entry" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "telegramUserId" TEXT NOT NULL,
+    "systolic" INTEGER NOT NULL,
+    "diastolic" INTEGER NOT NULL,
+    "pulse" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

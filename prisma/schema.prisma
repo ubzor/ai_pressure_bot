@@ -1,0 +1,18 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
+}
+
+model Entry {
+    id             Int      @id @default(autoincrement())
+    telegramUserId String
+    systolic       Int
+    diastolic      Int
+    pulse          Int
+    createdAt      DateTime @default(now())
+}

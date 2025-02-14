@@ -1,0 +1,8 @@
+build/
+node_modules/
+prisma/dev.db
+prisma/dev.db-journal
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
