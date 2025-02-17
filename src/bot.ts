@@ -15,9 +15,13 @@ const menu = new Keyboard().text('новая запись').row().text('пока
 
 // Command /start: explain bot usage and show menu
 bot.command('start', async (ctx) => {
+    console.log('start command received')
+
     const welcomeMsg = `Добро пожаловать! Этот бот поможет вести дневник давления.
 Используйте кнопки в меню ниже для создания новой записи или просмотра статистики.`
     await ctx.reply(welcomeMsg, { reply_markup: menu })
+
+    console.log('start command processed')
 })
 
 // Handle messages for menu actions and new data
