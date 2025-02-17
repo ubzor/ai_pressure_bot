@@ -1,12 +1,10 @@
 import dotenv from 'dotenv'
+dotenv.config()
+
 import { Bot, Keyboard } from 'grammy'
 
 import prisma from './prisma'
 import type { Entry } from '@prisma/client' // Added type import
-
-console.log('bot imports loaded')
-
-dotenv.config()
 
 const token = process.env.BOT_TOKEN
 if (!token) throw new Error('BOT_TOKEN must be provided in env variables')
@@ -17,13 +15,9 @@ const menu = new Keyboard().text('новая запись').row().text('пока
 
 // Command /start: explain bot usage and show menu
 bot.command('start', async (ctx) => {
-    console.log('start command received')
-
     const welcomeMsg = `Добро пожаловать! Этот бот поможет вести дневник давления.
 Используйте кнопки в меню ниже для создания новой записи или просмотра статистики.`
     await ctx.reply(welcomeMsg, { reply_markup: menu })
-
-    console.log('start command processed')
 })
 
 // Handle messages for menu actions and new data
