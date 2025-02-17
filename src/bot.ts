@@ -33,25 +33,33 @@ bot.on('message:text', async (ctx) => {
     }
 
     if (text === 'показать статистику') {
-        const entries = await prisma.entry.findMany({
-            where: { telegramUserId: userId },
-            orderBy: { createdAt: 'asc' }
-        })
-        if (entries.length === 0) {
-            await ctx.reply('Нет записей для отображения.', {
+        try {
+            const entries = await prisma.entry.findMany({
+                where: { telegramUserId: userId },
+                orderBy: { createdAt: 'asc' },
+            })
+            if (entries.length === 0) {
+                await ctx.reply('Нет записей для отображения.', {
+                    reply_markup: menu
+                })
+                return
+            }
+            const stats = entries
+                .map(
+                    (entry: Entry) =>
+                        `${new Date(entry.createdAt).toLocaleString()}: ${
+                            entry.systolic
+                        }/${entry.diastolic} мм.рт.ст, пульс: ${entry.pulse}`
+                )
+                .join('\n')
+            await ctx.reply(stats, { reply_markup: menu })
+        } catch (error: any) {
+            console.error(error)
+            await ctx.reply('Ошибка при получении записей. Попробуйте снова.', {
                 reply_markup: menu
             })
-            return
         }
-        const stats = entries
-            .map(
-                (entry: Entry) =>
-                    `${new Date(entry.createdAt).toLocaleString()}: ${entry.systolic}/${
-                        entry.diastolic
-                    } мм.рт.ст, пульс: ${entry.pulse}`
-            )
-            .join('\n')
-        await ctx.reply(stats, { reply_markup: menu })
+
         return
     }
 
@@ -92,4 +100,3 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default bot
-
