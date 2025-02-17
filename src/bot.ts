@@ -1,10 +1,12 @@
 import dotenv from 'dotenv'
-dotenv.config()
-
 import { Bot, Keyboard } from 'grammy'
 
 import prisma from './prisma'
 import type { Entry } from '@prisma/client' // Added type import
+
+console.log('bot imports loaded')
+
+dotenv.config()
 
 const token = process.env.BOT_TOKEN
 if (!token) throw new Error('BOT_TOKEN must be provided in env variables')
